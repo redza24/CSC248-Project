@@ -201,6 +201,28 @@ class List {
         currNode = firstNode;
         return currNode.getNext();
     }
+    
+    public Object get(int index) {
+        if (index < 0 || index >= size()) {
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size());
+        }
+
+        currNode = firstNode;
+        for (int i = 0; i < index; i++) {
+            currNode = currNode.getNext();
+        }
+
+        return currNode.getObject();
+    }
+
+    public String toString(Object obj) {
+        currNode = firstNode;
+        while(currNode != null) {
+            obj.toString();
+            currNode = currNode.getNext();
+        }
+        return obj.toString();
+    }
 
     public String toString(Object obj) {
         currNode = firstNode;
