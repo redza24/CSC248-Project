@@ -65,8 +65,8 @@ public class Patient {
     }
 
     public String toString() {
-        return "Name: " + name + "\nIC Number: " + ICnum + "\nDate of Birth: " + dateOfBirth + "\nPhone Number: "
-                + phoneNum + "\nEmail: " + email + "\nAddress: " + address + "\nDiagnosis: " + diagnosis;
+        return "Name\t : " + name + "\nIC No\t : " + ICnum + "\nDoB\t : " + dateOfBirth + "\nPhone No : "
+                + phoneNum + "\nEmail\t : " + email + "\nAddress\t : " + address + "\nDiagnosis: " + diagnosis;
     }
 }
 
