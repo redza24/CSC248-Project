@@ -4,19 +4,19 @@ public class LinkedList extends List{
     }
 
     public int size() {
-        return size();
+        return super.size();
     }
 
     public boolean isEmpty() {
-        return isEmpty();
+        return super.isEmpty();
     }
 
     public void insertAtFront(Object obj) {
-        insertAtFront(obj);
+        super.insertAtFront(obj);
     }
 
     public void insertAtBack(Object obj) {
-        insertAtBack(obj);
+        super.insertAtBack(obj);
     }
 
     public Object removeFront() {
@@ -24,18 +24,22 @@ public class LinkedList extends List{
     }
 
     public Object removeBack() {
-        return removeBack();
+        return super.removeBack();
     }
 
     public Object getFirst() {
-        return getFirst();
+        return super.getFirst();
     }
 
     public Object getLast() {
-        return getLast();
+        return super.getLast();
     }
 
     public Object getNext() {
-        return getNext();
+        return super.getNext();
+    }
+
+    public Object get(int i) {
+        return super.get(i);
     }
 }
