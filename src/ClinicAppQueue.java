@@ -83,6 +83,7 @@ public class ClinicAppQueue {
     public static void clearScreen() {
         System.out.print("\033[H\033[2J"); // ANSI escape code to clear the screen
         System.out.flush();
+        System.out.println();
     }
 
     public static void displayMenu() {
