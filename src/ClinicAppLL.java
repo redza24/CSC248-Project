@@ -141,7 +141,7 @@ public class ClinicAppLL {
                 System.out.print("Set the new diagnosis: ");
                 String diagnosis = scan.nextLine();
     
-                patient.setPatient(phoneNum, email, address, diagnosis);
+                patient.setContactDetails(phoneNum, email, address, diagnosis);
                 System.out.println("\u001B[32m" + "Data updated successfully!" + "\u001B[0m");
                 saveRecord(list);
                 break; // Exit the loop after updating the data
