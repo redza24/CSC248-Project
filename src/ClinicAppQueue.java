@@ -25,57 +25,63 @@ public class ClinicAppQueue {
         clearScreen();
         int choice = 0;
         do {
-            displayMenu();
-            choice = in1.nextInt();
-            System.out.println();
+            try {
+                displayMenu();
+                choice = in1.nextInt();
+                System.out.println();
 
-            switch (choice) {
-                case 1:
-                    clearScreen();
+                switch (choice) {
+                    case 1:
+                        clearScreen();
 
-                    Patient patient = addPatient();
-                    queue.enqueue(patient);
-                    break;
+                        Patient patient = addPatient();
+                        queue.enqueue(patient);
+                        break;
 
-                case 2:
-                    clearScreen();
+                    case 2:
+                        clearScreen();
 
-                    try {
-                    Patient removedPatient = (Patient) queue.dequeue();
-                    if (removedPatient != null) {
-                        System.out.println(removedPatient);
-                    } 
-                    } catch (EmptyListException e) {
-                        System.out.println("\t\u001B[31m" + "Queue is empty. No patient removed." + "\u001B[0m");
-                    }
+                        try {
+                            Patient removedPatient = (Patient) queue.dequeue();
+                            if (removedPatient != null) {
+                                System.out.println(removedPatient);
+                            }
+                        } catch (EmptyListException e) {
+                            System.out.println("\t\u001B[31m" + "Queue is empty. No patient removed." + "\u001B[0m");
+                        }
 
-                    break;
+                        break;
 
-                case 3:
-                    clearScreen();
-                    System.out.println("Size of queue: " + queue.size());
-                    break;
+                    case 3:
+                        clearScreen();
+                        System.out.println("Size of queue: " + queue.size());
+                        break;
 
-                case 4:
-                    clearScreen();
+                    case 4:
+                        clearScreen();
 
-                    if (queue.isEmpty())
-                        System.out.println("Queue is empty.");
-                    else
-                        System.out.println("Queue is not empty.");
+                        if (queue.isEmpty())
+                            System.out.println("Queue is empty.");
+                        else
+                            System.out.println("Queue is not empty.");
 
-                    break;
+                        break;
 
-                case 5:
-                    clearScreen();
-                    System.out.println("\t\u001B[32m" + "Exit the system..." + "\u001B[0m");
-                    System.out.println();
-                    return;
+                    case 5:
+                        clearScreen();
+                        System.out.println("\t\u001B[32m" + "Exit the system..." + "\u001B[0m");
+                        System.out.println();
+                        return;
 
-                default:
-                    clearScreen();
-                    System.out.println("\t\u001B[31m" + "Wrong choice!" + "\u001B[0m");
-                    break;
+                    default:
+                        clearScreen();
+                        System.out.println("\t\u001B[31m" + "Wrong choice!" + "\u001B[0m");
+                        break;
+                }
+            } catch (InputMismatchException e) {
+                clearScreen();
+                System.out.println("\t\u001B[31m" + "Invalid input. Please enter an integer." + "\u001B[0m");
+                in1.nextLine(); // Clear the buffer
             }
         } while (choice != 5);
     }
