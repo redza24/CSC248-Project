@@ -9,10 +9,10 @@ public class ClinicAppQueue {
         Queue queue = new Queue();
 
         // Read data from file and add to queue
-        try (BufferedReader br = new BufferedReader(new FileReader("inputFile.txt"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("patient_data.txt"))) {
             String line;
             while ((line = br.readLine()) != null) {
-                String[] details = line.split("; ");
+                String[] details = line.split(";");
                 Patient patient = new Patient(details[0], details[1], details[2], details[3],
                         details[4], details[5], details[6]);
                 queue.enqueue(patient);

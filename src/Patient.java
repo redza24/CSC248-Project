@@ -224,15 +224,6 @@ class List {
         return obj.toString();
     }
 
-    public String toString(Object obj) {
-        currNode = firstNode;
-        while (currNode != null) {
-            obj.toString();
-            currNode = currNode.getNext();
-        }
-        return obj.toString();
-    }
-
     // exclusive for Queue
 
     public Patient removedPatient(String ICnum) throws EmptyListException {

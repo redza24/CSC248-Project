@@ -10,7 +10,8 @@ public class ClinicAppLL {
     public static void main(String[] args) {
         System.out.println();
         retrieveRecord(patient);
-        System.out.println("\n\u001B[33mThis system automatically retrieve data from txt file (if any) and automatically save when changes happen such as insertion, removal and update\u001B[0m");
+        System.out.println(
+                "\n\u001B[33mThis system automatically retrieve data from txt file (if any) and automatically save when changes happen such as insertion, removal and update\u001B[0m");
         int choice = 0;
         do {
             System.out.println("\n===== CLINIC SYSTEM MANAGEMENT =====");
@@ -124,13 +125,16 @@ public class ClinicAppLL {
 
     public static void update(LinkedList list) {
         System.out.println("===== UPDATE =====\n");
-        System.out.println("\u001B[33m" + "This method is used for updating phone number, email, address, and diagnosis" + "\u001B[0m");
+        System.out.println("\u001B[33m" + "This method is used for updating phone number, email, address, and diagnosis"
+                + "\u001B[0m");
         System.out.print("\nEnter IC Number to be updated: ");
         String ICnum = scan.nextLine();
 
+        boolean found = false;
         for (int i = 0; i < list.size(); i++) {
             Patient patient = (Patient) list.get(i);
             if (ICnum.equals(patient.getICnum())) {
+                found = true;
                 // ask user new data
                 System.out.print("Set the new phone number: ");
                 String phoneNum = scan.nextLine();
@@ -140,15 +144,15 @@ public class ClinicAppLL {
                 String address = scan.nextLine();
                 System.out.print("Set the new diagnosis: ");
                 String diagnosis = scan.nextLine();
-    
+
                 patient.setContactDetails(phoneNum, email, address, diagnosis);
                 System.out.println("\u001B[32m" + "Data updated successfully!" + "\u001B[0m");
                 saveRecord(list);
                 break; // Exit the loop after updating the data
-            } else {
-                System.out.println("\u001B[31m" + "Sorry, Data Not Found!" + "\u001B[0m");
-                break; //so it will not repeat upon testing
             }
+        }
+        if (!found) {
+            System.out.println("\u001B[31m" + "Sorry, Data Not Found!" + "\u001B[0m");
         }
     }
 
@@ -156,41 +160,46 @@ public class ClinicAppLL {
         System.out.println("===== SEARCH =====\n");
         System.out.print("Enter IC Number to be searched: ");
         String ICnum = scan.nextLine();
-        //since while obj != null is quite hard, change to fori instead
+        // since while obj != null is quite hard, change to fori instead
+        boolean found = false;
         for (int i = 0; i < list.size(); i++) {
             Patient patient = (Patient) list.get(i);
-            if(ICnum.equals(patient.getICnum())) {
+            if (ICnum.equals(patient.getICnum())) {
+                found = true;
                 System.out.println("\u001B[32m" + "Data found!" + "\u001B[0m");
                 System.out.println(patient.toString());
-                break;
+                break; // Exit the loop after finding the data
             }
-            else {
-                System.out.println("\u001B[31m" + "Sorry, Data Not Found!" + "\u001B[0m");
-                break;
-            }
+        }
+        if (!found) {
+            System.out.println("\u001B[31m" + "Sorry, Data Not Found!" + "\u001B[0m");
         }
     }
 
     public static void display(LinkedList list) {
         System.out.println("===== DISPLAY =====");
-        if(list.isEmpty())
+        if (list.isEmpty())
             System.out.println("\n\u001B[31mList is empty\u001B[0m");
         else {
             for (int i = 0; i < list.size(); i++) {
                 Patient patient = (Patient) list.get(i);
-                System.out.println("\n\u001B[32mPatient [" + (i + 1) +"]\u001B[0m");
-                System.out.println("Name: " + patient.getName() + "\nIC Number: " + patient.getICnum() + "\nDate of Birth: " + patient.getDateOfBirth() + "\nPhone Number: " + patient.getPhoneNum() + "\nEmail: " + patient.getEmail() + "\nAddress: " + patient.getAddress() + "\nDiagnosis: " + patient.getDiagnosis());
+                System.out.println("\n\u001B[32mPatient [" + (i + 1) + "]\u001B[0m");
+                System.out.println("Name\t : " + patient.getName() + "\nIC No\t : " + patient.getICnum()
+                        + "\nDoB\t : " + patient.getDateOfBirth() + "\nPhone No : " + patient.getPhoneNum()
+                        + "\nEmail\t : " + patient.getEmail() + "\nAddress\t : " + patient.getAddress() + "\nDiagnosis: "
+                        + patient.getDiagnosis());
             }
         }
-        
+
     }
 
     public static void saveRecord(LinkedList list) {
-        try (BufferedWriter writer= new BufferedWriter(new FileWriter("patient_data.txt"))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("patient_data.txt"))) {
             for (int i = 0; i < list.size(); i++) {
                 Patient patient = (Patient) list.get(i);
-                writer.write(patient.getName() + ";" + patient.getICnum() + ";" + patient.getDateOfBirth() + ";" + patient.getPhoneNum()
-                + ";" + patient.getEmail() + ";" + patient.getAddress() + ";" + patient.getDiagnosis() + "\n");
+                writer.write(patient.getName() + ";" + patient.getICnum() + ";" + patient.getDateOfBirth() + ";"
+                        + patient.getPhoneNum()
+                        + ";" + patient.getEmail() + ";" + patient.getAddress() + ";" + patient.getDiagnosis() + "\n");
             }
             System.out.println("\u001B[32m" + "File Saved!" + "\u001B[0m");
         } catch (Exception e) {
@@ -204,17 +213,17 @@ public class ClinicAppLL {
         try {
             in = new BufferedReader(new FileReader("patient_data.txt"));
             String inData = null;
-            while((inData = in.readLine()) != null) {
+            while ((inData = in.readLine()) != null) {
                 StringTokenizer st = new StringTokenizer(inData, ";");
                 String name = st.nextToken();
                 String ICnum = st.nextToken();
                 String dateOfBirth = st.nextToken();
                 String phoneNum = st.nextToken();
                 String email = st.nextToken();
-                String address  = st.nextToken();
+                String address = st.nextToken();
                 String diagnosis = st.nextToken();
 
-                list.insertAtFront(new Patient(name, ICnum, dateOfBirth, phoneNum, email, address, diagnosis));
+                list.insertAtBack(new Patient(name, ICnum, dateOfBirth, phoneNum, email, address, diagnosis));
             }
             in.close();
             System.out.println("\u001B[32m" + "Patient records retrieved successfully!" + "\u001B[0m");
