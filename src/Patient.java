@@ -1,36 +1,36 @@
 public class Patient {
     private String name;
     private String ICnum;
-    private String dateOfBirth;
-    private String phoneNum;
+    private String dob;
+    private String contact;
     private String email;
     private String address;
     private String diagnosis;
 
-    public Patient(String name, String ICnum, String dateOfBirth, String phoneNum, String email, String address,
+    public Patient(String name, String ICnum, String dob, String contact, String email, String address,
             String diagnosis) {
         this.name = name;
         this.ICnum = ICnum;
-        this.dateOfBirth = dateOfBirth;
-        this.phoneNum = phoneNum;
+        this.dob = dob;
+        this.contact = contact;
         this.email = email;
         this.address = address;
         this.diagnosis = diagnosis;
     }
 
-    public void setPatient(String name, String ICnum, String dateOfBirth, String phoneNum, String email, String address,
+    public void setPatient(String name, String ICnum, String dob, String contact, String email, String address,
             String diagnosis) {
         this.name = name;
         this.ICnum = ICnum;
-        this.dateOfBirth = dateOfBirth;
-        this.phoneNum = phoneNum;
+        this.dob = dob;
+        this.contact = contact;
         this.email = email;
         this.address = address;
         this.diagnosis = diagnosis;
     }
 
-    public void setContactDetails(String phoneNum, String email, String address, String diagnosis) {
-        this.phoneNum = phoneNum;
+    public void setContactDetails(String contact, String email, String address, String diagnosis) {
+        this.contact = contact;
         this.email = email;
         this.address = address;
         this.diagnosis = diagnosis;
@@ -44,12 +44,12 @@ public class Patient {
         return ICnum;
     }
 
-    public String getDateOfBirth() {
-        return dateOfBirth;
+    public String getDob() {
+        return dob;
     }
 
-    public String getPhoneNum() {
-        return phoneNum;
+    public String getContact() {
+        return contact;
     }
 
     public String getEmail() {
@@ -65,8 +65,8 @@ public class Patient {
     }
 
     public String toString() {
-        return "Name\t : " + name + "\nIC No\t : " + ICnum + "\nDoB\t : " + dateOfBirth + "\nPhone No : "
-                + phoneNum + "\nEmail\t : " + email + "\nAddress\t : " + address + "\nDiagnosis: " + diagnosis;
+        return "Name\t : " + name + "\nIC No\t : " + ICnum + "\nDoB\t : " + dob + "\nPhone No : "
+                + contact + "\nEmail\t : " + email + "\nAddress\t : " + address + "\nDiagnosis: " + diagnosis;
     }
 }
 
@@ -282,12 +282,6 @@ class List {
             while (!icNum.equals(patient.getICnum())) {
                 currNode = currNode.getNext();
             }
-            // return "Name: " + patient.getName() +
-            // "\nIC Number: " + patient.getICnum() +
-            // "\nDate of Birth: " + patient.getDateOfBirth() +
-            // "\nPhone Number: " + patient.getPhoneNum() +
-            // "\nEmail: " + patient.getEmail() + "\nAddress: " + patient.getAddress() +
-            // "\nDiagnosis: " + patient.getDiagnosis();
             return patient.toString();
         }
     }

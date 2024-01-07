@@ -33,7 +33,6 @@ public class ClinicAppQueue {
                 switch (choice) {
                     case 1:
                         clearScreen();
-
                         Patient patient = addPatient();
                         queue.enqueue(patient);
                         break;
@@ -84,7 +83,7 @@ public class ClinicAppQueue {
                 in1.nextLine(); // Clear the buffer
             }
         } while (choice != 5);
-    }
+    } // end main
 
     public static void clearScreen() {
         System.out.print("\033[H\033[2J"); // ANSI escape code to clear the screen
@@ -104,7 +103,7 @@ public class ClinicAppQueue {
 
     public static Patient addPatient() {
         System.out.print("Enter patient's name: ");
-        String name = in.nextLine();
+        String name = in.nextLine().toUpperCase();
         System.out.print("Enter patient's IC number: ");
         String ic = in.nextLine();
         System.out.print("Enter patient's date of birth: ");
@@ -114,11 +113,11 @@ public class ClinicAppQueue {
         System.out.print("Enter patient's email: ");
         String email = in.nextLine();
         System.out.print("Enter patient's address: ");
-        String address = in.nextLine();
+        String address = in.nextLine().toUpperCase();
         System.out.print("Enter patient's diagnosis: ");
-        String diagnosis = in.nextLine();
+        String diagnosis = in.nextLine().toUpperCase();
 
         Patient patient = new Patient(name, ic, dob, phone, email, address, diagnosis);
         return patient;
     }
-}
+} // end class ClinicAppQueue
