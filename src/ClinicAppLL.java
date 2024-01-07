@@ -3,8 +3,8 @@ import java.util.StringTokenizer;
 import java.io.*;
 
 public class ClinicAppLL {
-    static Scanner scan = new Scanner(System.in);
-    static Scanner scan1 = new Scanner(System.in);
+    static Scanner in = new Scanner(System.in);
+    static Scanner in1 = new Scanner(System.in);
     static LinkedList patient = new LinkedList();
 
     public static void main(String[] args) {
@@ -12,40 +12,49 @@ public class ClinicAppLL {
         retrieveRecord(patient);
         System.out.println(
                 "\n\u001B[33mThis system automatically retrieve data from txt file (if any) and automatically save when changes happen such as insertion, removal and update\u001B[0m");
+
+        ClinicAppQueue.clearScreen();
         int choice = 0;
         do {
             System.out.println("\n===== CLINIC SYSTEM MANAGEMENT =====");
             System.out.println("1. Insertion\n2. Removal\n3. Update\n4. Search\n5. Display\n6. Exit");
             System.out.print("Enter Option: ");
-            choice = scan1.nextInt();
+            choice = in1.nextInt();
             System.out.println();
             switch (choice) {
                 case 1:
+                    ClinicAppQueue.clearScreen();
                     insertion(patient);
                     break;
 
                 case 2:
+                    ClinicAppQueue.clearScreen();
                     deletion(patient);
                     break;
 
                 case 3:
+                    ClinicAppQueue.clearScreen();
                     update(patient);
                     break;
 
                 case 4:
+                    ClinicAppQueue.clearScreen();
                     search(patient);
                     break;
 
                 case 5:
+                    ClinicAppQueue.clearScreen();
                     display(patient);
                     break;
 
                 case 6:
+                    ClinicAppQueue.clearScreen();
                     System.out.println("\u001B[32m" + "Exit the system..." + "\u001B[0m");
                     System.out.println();
                     break;
 
                 default:
+                    ClinicAppQueue.clearScreen();
                     System.out.println("\u001B[31m" + "Wrong choice!" + "\u001B[0m");
                     break;
             }
@@ -54,29 +63,29 @@ public class ClinicAppLL {
 
     public static void insertion(LinkedList list) {
         System.out.print("Enter size of list: ");
-        int size = scan1.nextInt();
+        int size = in1.nextInt();
         for (int i = 0; i < size; i++) {
             System.out.println("\n===== INSERTION =====\n");
 
             System.out.println("----- PATIENT DETAILS -----");
             System.out.print("Name: ");
-            String name = scan.nextLine().toUpperCase();
+            String name = in.nextLine().toUpperCase();
             System.out.print("IC Number [XXXXXX-XX-XXXX]: ");
-            String ICnum = scan.nextLine();
+            String ICnum = in.nextLine();
             System.out.print("Date of Birth [dd/mm/yyyy]: ");
-            String dateOfBirth = scan.nextLine();
+            String dateOfBirth = in.nextLine();
             System.out.print("Phone Number [XXX-XXXXXXX]: ");
-            String phoneNum = scan.nextLine();
+            String phoneNum = in.nextLine();
             System.out.print("Email [x@mail.com]: ");
-            String email = scan.nextLine();
+            String email = in.nextLine();
             System.out.print("Address: ");
-            String address = scan.nextLine().toUpperCase();
+            String address = in.nextLine().toUpperCase();
             System.out.print("Diagnosis: ");
-            String diagnosis = scan.nextLine();
+            String diagnosis = in.nextLine();
 
             System.out.println("\n===================\n1. Insert At Front\n2. Insert At Back");
             System.out.print("Enter choice: ");
-            int choice = scan1.nextInt();
+            int choice = in1.nextInt();
             switch (choice) {
                 case 1:
                     list.insertAtFront(new Patient(name, ICnum, dateOfBirth, phoneNum, email, address, diagnosis));
@@ -99,7 +108,7 @@ public class ClinicAppLL {
         System.out.println("===== DELETION =====\n");
         System.out.println("--------------------\n1. Remove From Front\n2. Remove From Back\n3. Delete by IC Number");
         System.out.print("Enter choice: ");
-        int choice = scan1.nextInt();
+        int choice = in1.nextInt();
         switch (choice) {
             case 1:
                 patient.removeFront();
@@ -113,7 +122,7 @@ public class ClinicAppLL {
                 break;
             case 3:
                 System.out.print("Enter IC Number to be deleted: ");
-                String icNum = scan.nextLine();
+                String icNum = in.nextLine();
                 list.removedPatient(icNum);
                 saveRecord(list);
                 break;
@@ -128,7 +137,7 @@ public class ClinicAppLL {
         System.out.println("\u001B[33m" + "This method is used for updating phone number, email, address, and diagnosis"
                 + "\u001B[0m");
         System.out.print("\nEnter IC Number to be updated: ");
-        String ICnum = scan.nextLine();
+        String ICnum = in.nextLine();
 
         boolean found = false;
         for (int i = 0; i < list.size(); i++) {
@@ -137,13 +146,13 @@ public class ClinicAppLL {
                 found = true;
                 // ask user new data
                 System.out.print("Set the new phone number: ");
-                String phoneNum = scan.nextLine();
+                String phoneNum = in.nextLine();
                 System.out.print("Set the new email: ");
-                String email = scan.nextLine();
+                String email = in.nextLine();
                 System.out.print("Set the new address: ");
-                String address = scan.nextLine();
+                String address = in.nextLine();
                 System.out.print("Set the new diagnosis: ");
-                String diagnosis = scan.nextLine();
+                String diagnosis = in.nextLine();
 
                 patient.setContactDetails(phoneNum, email, address, diagnosis);
                 System.out.println("\u001B[32m" + "Data updated successfully!" + "\u001B[0m");
@@ -159,7 +168,7 @@ public class ClinicAppLL {
     public static void search(LinkedList list) {
         System.out.println("===== SEARCH =====\n");
         System.out.print("Enter IC Number to be searched: ");
-        String ICnum = scan.nextLine();
+        String ICnum = in.nextLine();
         // since while obj != null is quite hard, change to fori instead
         boolean found = false;
         for (int i = 0; i < list.size(); i++) {
@@ -186,7 +195,8 @@ public class ClinicAppLL {
                 System.out.println("\n\u001B[32mPatient [" + (i + 1) + "]\u001B[0m");
                 System.out.println("Name\t : " + patient.getName() + "\nIC No\t : " + patient.getICnum()
                         + "\nDoB\t : " + patient.getDateOfBirth() + "\nPhone No : " + patient.getPhoneNum()
-                        + "\nEmail\t : " + patient.getEmail() + "\nAddress\t : " + patient.getAddress() + "\nDiagnosis: "
+                        + "\nEmail\t : " + patient.getEmail() + "\nAddress\t : " + patient.getAddress()
+                        + "\nDiagnosis: "
                         + patient.getDiagnosis());
             }
         }
