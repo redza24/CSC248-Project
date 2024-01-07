@@ -1,5 +1,4 @@
-import java.util.Scanner;
-import java.util.StringTokenizer;
+import java.util.*;
 import java.io.*;
 
 public class ClinicAppLL {
@@ -8,57 +7,73 @@ public class ClinicAppLL {
     static LinkedList patient = new LinkedList();
 
     public static void main(String[] args) {
+        ClinicAppQueue.clearScreen();
+        System.out.println(
+                "\n\u001B[33mSystem automatically retrieves and saves data on changes to patient_data.txt.\u001B[0m");
         System.out.println();
         retrieveRecord(patient);
-        System.out.println(
-                "\n\u001B[33mThis system automatically retrieve data from txt file (if any) and automatically save when changes happen such as insertion, removal and update\u001B[0m");
 
-        ClinicAppQueue.clearScreen();
         int choice = 0;
         do {
-            System.out.println("\n===== CLINIC SYSTEM MANAGEMENT =====");
-            System.out.println("1. Insertion\n2. Removal\n3. Update\n4. Search\n5. Display\n6. Exit");
-            System.out.print("Enter Option: ");
-            choice = in1.nextInt();
-            System.out.println();
-            switch (choice) {
-                case 1:
-                    ClinicAppQueue.clearScreen();
-                    insertion(patient);
-                    break;
+            try {
+                displayMenu();
+                choice = in1.nextInt();
+                System.out.println();
 
-                case 2:
-                    ClinicAppQueue.clearScreen();
-                    deletion(patient);
-                    break;
+                switch (choice) {
+                    case 1:
+                        ClinicAppQueue.clearScreen();
+                        insertion(patient);
+                        break;
 
-                case 3:
-                    ClinicAppQueue.clearScreen();
-                    update(patient);
-                    break;
+                    case 2:
+                        ClinicAppQueue.clearScreen();
+                        deletion(patient);
+                        break;
 
-                case 4:
-                    ClinicAppQueue.clearScreen();
-                    search(patient);
-                    break;
+                    case 3:
+                        ClinicAppQueue.clearScreen();
+                        update(patient);
+                        break;
 
-                case 5:
-                    ClinicAppQueue.clearScreen();
-                    display(patient);
-                    break;
+                    case 4:
+                        ClinicAppQueue.clearScreen();
+                        search(patient);
+                        break;
 
-                case 6:
-                    ClinicAppQueue.clearScreen();
-                    System.out.println("\u001B[32m" + "Exit the system..." + "\u001B[0m");
-                    System.out.println();
-                    break;
+                    case 5:
+                        ClinicAppQueue.clearScreen();
+                        display(patient);
+                        break;
 
-                default:
-                    ClinicAppQueue.clearScreen();
-                    System.out.println("\u001B[31m" + "Wrong choice!" + "\u001B[0m");
-                    break;
+                    case 6:
+                        ClinicAppQueue.clearScreen();
+                        System.out.println("\t\u001B[32m" + "Exit the system..." + "\u001B[0m");
+                        System.out.println();
+                        return;
+
+                    default:
+                        ClinicAppQueue.clearScreen();
+                        System.out.println("\t\u001B[31m" + "Wrong choice!" + "\u001B[0m");
+                        break;
+                }
+            } catch (InputMismatchException e) {
+                ClinicAppQueue.clearScreen();
+                System.out.println("\t\u001B[31m" + "Invalid input. Please enter an integer." + "\u001B[0m");
+                in1.nextLine(); // Clear the buffer
             }
         } while (choice != 6);
+    } // end main
+
+    public static void displayMenu() {
+        System.out.println("\n===== CLINIC SYSTEM MANAGEMENT =====");
+        System.out.println("1. Insertion");
+        System.out.println("2. Removal");
+        System.out.println("3. Update");
+        System.out.println("4. Search");
+        System.out.println("5. Display");
+        System.out.println("6. Exit");
+        System.out.print("Enter Option: ");
     }
 
     public static void insertion(LinkedList list) {
@@ -73,27 +88,27 @@ public class ClinicAppLL {
             System.out.print("IC Number [XXXXXX-XX-XXXX]: ");
             String ICnum = in.nextLine();
             System.out.print("Date of Birth [dd/mm/yyyy]: ");
-            String dateOfBirth = in.nextLine();
+            String dob = in.nextLine();
             System.out.print("Phone Number [XXX-XXXXXXX]: ");
-            String phoneNum = in.nextLine();
+            String contact = in.nextLine();
             System.out.print("Email [x@mail.com]: ");
             String email = in.nextLine();
             System.out.print("Address: ");
             String address = in.nextLine().toUpperCase();
             System.out.print("Diagnosis: ");
-            String diagnosis = in.nextLine();
+            String diagnosis = in.nextLine().toUpperCase();
 
             System.out.println("\n===================\n1. Insert At Front\n2. Insert At Back");
             System.out.print("Enter choice: ");
             int choice = in1.nextInt();
             switch (choice) {
                 case 1:
-                    list.insertAtFront(new Patient(name, ICnum, dateOfBirth, phoneNum, email, address, diagnosis));
+                    list.insertAtFront(new Patient(name, ICnum, dob, contact, email, address, diagnosis));
                     System.out.println("\u001B[32m" + "Data inserted successfully!" + "\u001B[0m");
                     saveRecord(list);
                     break;
                 case 2:
-                    list.insertAtBack(new Patient(name, ICnum, dateOfBirth, phoneNum, email, address, diagnosis));
+                    list.insertAtBack(new Patient(name, ICnum, dob, contact, email, address, diagnosis));
                     System.out.println("\u001B[32m" + "Data inserted successfully!" + "\u001B[0m");
                     saveRecord(list);
                     break;
@@ -122,8 +137,8 @@ public class ClinicAppLL {
                 break;
             case 3:
                 System.out.print("Enter IC Number to be deleted: ");
-                String icNum = in.nextLine();
-                list.removedPatient(icNum);
+                String ICnum = in.nextLine();
+                list.removedPatient(ICnum);
                 saveRecord(list);
                 break;
             default:
@@ -146,15 +161,15 @@ public class ClinicAppLL {
                 found = true;
                 // ask user new data
                 System.out.print("Set the new phone number: ");
-                String phoneNum = in.nextLine();
+                String contact = in.nextLine();
                 System.out.print("Set the new email: ");
                 String email = in.nextLine();
                 System.out.print("Set the new address: ");
-                String address = in.nextLine();
+                String address = in.nextLine().toUpperCase();
                 System.out.print("Set the new diagnosis: ");
-                String diagnosis = in.nextLine();
+                String diagnosis = in.nextLine().toUpperCase();
 
-                patient.setContactDetails(phoneNum, email, address, diagnosis);
+                patient.setContactDetails(contact, email, address, diagnosis);
                 System.out.println("\u001B[32m" + "Data updated successfully!" + "\u001B[0m");
                 saveRecord(list);
                 break; // Exit the loop after updating the data
@@ -194,7 +209,7 @@ public class ClinicAppLL {
                 Patient patient = (Patient) list.get(i);
                 System.out.println("\n\u001B[32mPatient [" + (i + 1) + "]\u001B[0m");
                 System.out.println("Name\t : " + patient.getName() + "\nIC No\t : " + patient.getICnum()
-                        + "\nDoB\t : " + patient.getDateOfBirth() + "\nPhone No : " + patient.getPhoneNum()
+                        + "\nDoB\t : " + patient.getDob() + "\nPhone No : " + patient.getContact()
                         + "\nEmail\t : " + patient.getEmail() + "\nAddress\t : " + patient.getAddress()
                         + "\nDiagnosis: "
                         + patient.getDiagnosis());
@@ -207,8 +222,8 @@ public class ClinicAppLL {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("patient_data.txt"))) {
             for (int i = 0; i < list.size(); i++) {
                 Patient patient = (Patient) list.get(i);
-                writer.write(patient.getName() + ";" + patient.getICnum() + ";" + patient.getDateOfBirth() + ";"
-                        + patient.getPhoneNum()
+                writer.write(patient.getName() + ";" + patient.getICnum() + ";" + patient.getDob() + ";"
+                        + patient.getContact()
                         + ";" + patient.getEmail() + ";" + patient.getAddress() + ";" + patient.getDiagnosis() + "\n");
             }
             System.out.println("\u001B[32m" + "File Saved!" + "\u001B[0m");
@@ -227,13 +242,13 @@ public class ClinicAppLL {
                 StringTokenizer st = new StringTokenizer(inData, ";");
                 String name = st.nextToken();
                 String ICnum = st.nextToken();
-                String dateOfBirth = st.nextToken();
-                String phoneNum = st.nextToken();
+                String dob = st.nextToken();
+                String contact = st.nextToken();
                 String email = st.nextToken();
                 String address = st.nextToken();
                 String diagnosis = st.nextToken();
 
-                list.insertAtBack(new Patient(name, ICnum, dateOfBirth, phoneNum, email, address, diagnosis));
+                list.insertAtBack(new Patient(name, ICnum, dob, contact, email, address, diagnosis));
             }
             in.close();
             System.out.println("\u001B[32m" + "Patient records retrieved successfully!" + "\u001B[0m");
@@ -242,4 +257,4 @@ public class ClinicAppLL {
             e.printStackTrace();
         }
     }
-}
+} // end class ClinicAppLL
