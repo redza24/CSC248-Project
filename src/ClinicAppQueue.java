@@ -35,6 +35,7 @@ public class ClinicAppQueue {
                         clearScreen();
                         Patient patient = addPatient();
                         queue.enqueue(patient);
+                        saveRecord(queue);
                         break;
 
                     case 2:
@@ -119,5 +120,20 @@ public class ClinicAppQueue {
 
         Patient patient = new Patient(name, ic, dob, phone, email, address, diagnosis);
         return patient;
+    }
+
+    public static void saveRecord(Queue queue) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("patient_data.txt"))) {
+                while (!queue.isEmpty()) {
+                    Patient patient = (Patient) queue.dequeue();
+                    writer.write(patient.getName() + ";" + patient.getICnum() + ";" + patient.getDob() + ";"
+                        + patient.getContact()
+                        + ";" + patient.getEmail() + ";" + patient.getAddress() + ";" + patient.getDiagnosis() + "\n");
+                }
+            System.out.println("\u001B[32m" + "File Saved!" + "\u001B[0m");
+        } catch (Exception e) {
+            System.out.println("\u001B[31mAn error occurred while saving the data to patient_data.txt.\u001B[0m");
+            e.printStackTrace();
+        }
     }
 } // end class ClinicAppQueue
