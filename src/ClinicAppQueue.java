@@ -4,7 +4,7 @@ import java.io.*;
 public class ClinicAppQueue {
     static Scanner in = new Scanner(System.in);
     static Scanner in1 = new Scanner(System.in);
-
+    static Queue tempQueue = new Queue();
     public static void main(String[] args) {
         Queue queue = new Queue();
 
@@ -35,6 +35,7 @@ public class ClinicAppQueue {
                         clearScreen();
                         Patient patient = addPatient();
                         queue.enqueue(patient);
+                        saveRecord(queue);
                         break;
 
                     case 2:
@@ -44,6 +45,7 @@ public class ClinicAppQueue {
                             Patient removedPatient = (Patient) queue.dequeue();
                             if (removedPatient != null) {
                                 System.out.println(removedPatient);
+                                saveRecord(queue);
                             }
                         } catch (EmptyListException e) {
                             System.out.println("\t\u001B[31m" + "Queue is empty. No patient removed." + "\u001B[0m");
@@ -119,5 +121,24 @@ public class ClinicAppQueue {
 
         Patient patient = new Patient(name, ic, dob, phone, email, address, diagnosis);
         return patient;
+    }
+
+    public static void saveRecord(Queue queue) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("patient_data.txt"))) {
+            while(!queue.isEmpty()) {
+                Patient patient = (Patient) queue.dequeue();
+                tempQueue.enqueue(patient);
+                writer.write(patient.getName() + ";" + patient.getICnum() + ";" + patient.getDob() + ";"
+                        + patient.getContact()
+                        + ";" + patient.getEmail() + ";" + patient.getAddress() + ";" + patient.getDiagnosis() + "\n");
+            }
+            while(!tempQueue.isEmpty()) {
+                queue.enqueue(tempQueue.dequeue());
+            }
+            System.out.println("\u001B[32m" + "File Saved!" + "\u001B[0m");
+        } catch (Exception e) {
+            System.out.println("\u001B[31mAn error occurred while saving the data to patient_data.txt.\u001B[0m");
+            e.printStackTrace();
+        }
     }
 } // end class ClinicAppQueue
